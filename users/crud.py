@@ -25,4 +25,8 @@ def get_user(db_task, id):
 
 
 def get_user_task(db_task, id):
-    result  = db_task.find_many()
+    user_task  = list(db_task.find({"user_id":id}))
+    for task in user_task:
+        task["_id"] = str(task["_id"])    
+    return {"user_task": user_task}
+

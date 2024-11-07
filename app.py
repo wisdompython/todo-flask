@@ -48,20 +48,21 @@ def add_user():
     user = create_user(db_user)
     return user
 
-@app.route("/users/", methods=["GET"])
-def retrieve_users(id):
-    users = get_all_users(db_user, id)
+@app.route("/users", methods=["GET"])
+def retrieve_users():
+    users = get_all_users(db_user)
 
     return jsonify(users)
 
 @app.route("/users/<int:id>", methods=["GET"])
-def retrieve_users(id):
+def retrieve_user(id):
     user = get_user(db_user, id)
 
     return jsonify(user)
 
-@app.route("users/<int:id>/task")
-def get_user_task(id):
-    pass
+@app.route("/users/<int:id>/task", methods=["GET"])
+def retrieve_user_task(id):
+   user_task =  get_user_task(db_task, id)
+   return jsonify(user_task)
 
 app.run(debug=True, host="0.0.0.0", port=8000)
