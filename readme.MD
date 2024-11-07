@@ -17,8 +17,7 @@ This is a Flask-based REST API for managing users and tasks. It includes CRUD op
 ### Installation
 1. Clone this repository:
     ```bash
-    git clone <repository_url>
-    cd <repository_folder>
+    git clone https://github.com/wisdompython/todo-flask.git
     ```
 
 2. Start the application with Docker Compose:
