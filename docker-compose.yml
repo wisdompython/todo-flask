@@ -1,0 +1,51 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: taskdb
+      MONGO_INITDB_ROOT_PASSWORD: flaskdev_123!
+      MONGO_INITDB_DATABASE: new_db
+      ROOT_USERNAME: taskdb
+      ROOT_PASSWORD : flaskdev_123!
+
+    networks:
+      - my_network
+
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: taskdb
+      ME_CONFIG_MONGODB_ADMINPASSWORD: flaskdev_123!
+      ME_CONFIG_MONGODB_URL: mongodb://taskdb:flaskdev_123!@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+    networks:
+      - my_network
+  flask-app:
+    build : .
+
+    networks:
+      - my_network
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - mongo
+
+    volumes:
+      - ./:/app
+    
+networks:
+  my_network:
